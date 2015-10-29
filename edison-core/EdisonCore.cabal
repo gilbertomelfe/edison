@@ -58,6 +58,9 @@ Library
      EdisonAPI,
      containers,
      array
+-- <G>
+     , deepseq >=1.4 && < 1.5
+-- </G>
   Default-Language: Haskell2010
   Default-Extensions:
      MultiParamTypeClasses
