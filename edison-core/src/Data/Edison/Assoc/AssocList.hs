@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Assoc.AssocList
 --   Copyright   :  Copyright (c) 1998, 2008 Chris Okasaki
@@ -63,6 +71,18 @@ import qualified Data.Edison.Seq as S
 import qualified Data.Edison.Seq.BinaryRandList as RL
 import Data.Edison.Assoc.Defaults
 import Test.QuickCheck (Arbitrary(..), CoArbitrary(..), variant)
+
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName    :: String
@@ -183,6 +203,13 @@ moduleName = "Data.Edison.Assoc.AssocList"
 
 
 data FM k a = E | I k a (FM k a)
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 -- no invariants
 structuralInvariant :: Eq k => FM k a -> Bool

@@ -1,3 +1,11 @@
+-- {-# LANGUAGE DeriveGeneric #-}
+
+-- {-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Assoc.AssocList
 --   Copyright   :  Copyright (c) 2006, 2008 Robert Dockins
@@ -60,7 +68,28 @@ import Test.QuickCheck (Arbitrary(..), CoArbitrary(..))
 
 import qualified Data.Map as DM
 
+-- <G>
+
+--import Control.DeepSeq
+
+{-
+import GHC.Generics (
+    Generic
+    )
+-}
+
+
+-- </G>
+
+
 type FM = DM.Map
+-- <G>
+
+    --deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 moduleName :: String
 moduleName = "Data.Edison.Assoc.StandardMap"
