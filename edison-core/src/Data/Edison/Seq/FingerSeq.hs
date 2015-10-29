@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+-- {-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Seq.FingerSeq
 --   Copyright   :  Copyright (c) 2006, 2008 Robert Dockins
@@ -51,11 +59,34 @@ import GHC.Base (unsafeCoerce#)
 
 import qualified Data.Edison.Concrete.FingerTree as FT
 
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
+
 moduleName     :: String
 moduleName = "Data.Edison.Seq.FingerSeq"
 
 
-newtype SizeM = SizeM Int deriving (Eq,Ord,Num,Enum,Show)
+-- <G /> newtype SizeM = SizeM Int deriving (Eq,Ord,Num,Enum,Show)
+
+-- <G>
+
+newtype SizeM = SizeM Int
+    deriving ( Eq , Ord , Num , Enum , Show , Generic , NFData )
+
+-- Not Needed! Why? -- instance NFData Int => NFData ( SizeM )
+
+
+-- </G>
+
 
 unSizeM :: SizeM -> Int
 unSizeM (SizeM x) = x
@@ -65,7 +96,16 @@ instance Monoid SizeM where
    mappend = (+)
 
 
+-- <G /> newtype Elem a = Elem a
+
+-- <G>
+
 newtype Elem a = Elem a
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 unElem :: Elem t -> t
 unElem (Elem x) = x
@@ -74,6 +114,13 @@ instance Measured SizeM (Elem a) where
    measure _ = 1
 
 newtype Seq a = Seq (FT.FingerTree SizeM (Elem a))
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 unSeq :: Seq t -> FT.FingerTree SizeM (Elem t)
 unSeq (Seq ft) = ft

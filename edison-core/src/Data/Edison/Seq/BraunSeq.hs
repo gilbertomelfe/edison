@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Seq.BraunSeq
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -82,6 +90,17 @@ import qualified Data.Edison.Seq as S ( Sequence(..) )
 import Data.Edison.Seq.Defaults
 import qualified Data.Edison.Seq.ListSeq as L
 
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName     :: String
@@ -163,7 +182,16 @@ structuralInvariant :: Seq a -> Bool
 moduleName = "Data.Edison.Seq.BraunSeq"
 
 
-data Seq a = E | B a (Seq a) (Seq a)    deriving (Eq)
+-- <G /> data Seq a = E | B a (Seq a) (Seq a)    deriving (Eq)
+
+-- <G>
+
+data Seq a = E | B a (Seq a) (Seq a)
+    deriving ( Eq , Generic , NFData )
+
+
+-- </G>
+
 
 half :: Int -> Int
 half n = n `quot` 2  -- use a shift?

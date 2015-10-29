@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Seq.MyersStack
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -54,6 +62,18 @@ import Data.Edison.Seq.Defaults
 import Control.Monad.Identity
 import Data.Monoid
 import Test.QuickCheck
+
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName     :: String
@@ -137,6 +157,14 @@ moduleName = "Data.Edison.Seq.MyersStack"
 
 data Seq a = E | C !Int a (Seq a) (Seq a)
   -- what about strictness flags on tail and jump-tail?
+
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 -- auxiliary function
 jump :: Seq t -> Seq t

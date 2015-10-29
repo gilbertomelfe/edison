@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Seq.SimpleQueue
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -59,6 +67,18 @@ import qualified Data.Edison.Seq.ListSeq as L
 import Data.Monoid
 import Control.Monad
 import Test.QuickCheck
+
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName     :: String
@@ -142,6 +162,14 @@ moduleName = "Data.Edison.Seq.SimpleQueue"
 
 data Seq a = Q [a] [a]
   -- invariant: front empty only if rear also empty
+
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 -- not exported
 makeQ :: [a] -> [a] -> Seq a

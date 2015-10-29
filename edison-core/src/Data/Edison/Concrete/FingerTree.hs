@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 {-# LANGUAGE UndecidableInstances #-}
 -----------------------------------------------------------------------------
 -- |
@@ -82,6 +90,17 @@ import Data.Edison.Prelude
 
 import Control.Monad (liftM2, liftM3, liftM4)
 
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 infixr 5 `lcons`
 infixl 5 `rcons0`
@@ -91,7 +110,15 @@ data Digit a
         | Two a a
         | Three a a a
         | Four a a a a
-        deriving Show
+-- <G />        deriving Show
+
+-- <G>
+
+    deriving ( Show , Generic , NFData )
+
+
+-- </G>
+
 
 foldDigit :: (b -> b -> b) -> (a -> b) -> Digit a -> b
 foldDigit _ f (One a) = f a
@@ -121,7 +148,15 @@ instance (Measured v a) => Measured v (Digit a) where
         measure = foldDigit mappend measure
 
 data Node v a = Node2 !v a a | Node3 !v a a a
-        deriving Show
+-- <G />        deriving Show
+
+-- <G>
+
+    deriving ( Show , Generic , NFData )
+
+
+-- </G>
+
 
 sizeNode :: (a -> Int) -> Node v a -> Int
 sizeNode f (Node2 _ x y)   = f x + f y
@@ -156,6 +191,13 @@ data FingerTree v a
         = Empty
         | Single a
         | Deep !v !(Digit a) (FingerTree v (Node v a)) !(Digit a)
+-- <G>
+
+        deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 deep ::  (Measured v a) =>
          Digit a -> FingerTree v (Node v a) -> Digit a -> FingerTree v a

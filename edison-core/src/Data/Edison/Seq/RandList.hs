@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Seq.RandList
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -60,6 +68,18 @@ import Data.Edison.Seq.Defaults
 import Control.Monad.Identity
 import Data.Monoid
 import Test.QuickCheck
+
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName     :: String
@@ -139,8 +159,20 @@ strictWith     :: (a -> b) -> Seq a -> Seq a
 moduleName = "Data.Edison.Seq.RandList"
 
 
-data Tree a = L a | T a (Tree a) (Tree a)   deriving (Eq)
-data Seq a = E | C !Int (Tree a) (Seq a)    deriving (Eq)
+-- <G /> data Tree a = L a | T a (Tree a) (Tree a)   deriving (Eq)
+-- <G /> data Seq a = E | C !Int (Tree a) (Seq a)    deriving (Eq)
+
+-- <G>
+
+data Tree a = L a | T a (Tree a) (Tree a)
+    deriving ( Eq , Generic , NFData )
+
+data Seq a = E | C !Int (Tree a) (Seq a)
+    deriving ( Eq , Generic , NFData )
+
+
+-- </G>
+
 
 half :: Int -> Int
 half n = n `quot` 2  -- use a shift?

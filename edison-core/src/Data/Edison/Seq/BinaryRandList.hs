@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Seq.BinaryRandList
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -63,6 +71,18 @@ import Data.Edison.Seq.Defaults
 import Data.Monoid
 import Control.Monad
 import Test.QuickCheck
+
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName     :: String
@@ -144,7 +164,17 @@ structuralInvariant :: Seq a -> Bool
 moduleName = "Data.Edison.Seq.BinaryRandList"
 
 
-data Seq a = E | Even (Seq (a,a)) | Odd a (Seq (a,a))    deriving (Eq)
+-- <G /> data Seq a = E | Even (Seq (a,a)) | Odd a (Seq (a,a))    deriving (Eq)
+
+-- <G>
+
+data Seq a = E | Even (Seq (a,a)) | Odd a (Seq (a,a))
+
+    deriving ( Eq , Generic , NFData )
+
+
+-- </G>
+
 
 -- not exported, rewrite as bit ops?
 --even n = (n `mod` 2) == 0

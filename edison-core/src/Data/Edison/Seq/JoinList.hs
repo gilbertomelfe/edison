@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Seq.JoinList
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -59,6 +67,18 @@ import Data.Edison.Seq.Defaults
 import Control.Monad
 import Data.Monoid
 import Test.QuickCheck
+
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName     :: String
@@ -141,6 +161,14 @@ moduleName = "Data.Edison.Seq.JoinList"
 
 data Seq a = E | L a | A (Seq a) (Seq a)
   -- invariant: E never a child of A
+
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 half :: Int -> Int
 half n = n `div` 2

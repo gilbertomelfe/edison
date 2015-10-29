@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Seq.BankersQueue
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -57,6 +65,18 @@ import qualified Data.Edison.Seq.ListSeq as L
 import Data.Monoid
 import Control.Monad.Identity
 import Test.QuickCheck
+
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName     :: String
@@ -140,6 +160,12 @@ moduleName = "Data.Edison.Seq.BankersQueue"
 
 
 data Seq a = Q !Int [a] [a] !Int
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
 
 -- invariant: front at least as long as rear
 structuralInvariant (Q x f r y) =
