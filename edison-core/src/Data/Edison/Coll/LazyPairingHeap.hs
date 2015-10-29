@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Coll.LazyPairingHeap
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -50,6 +58,18 @@ import Data.Monoid
 import Control.Monad
 import Test.QuickCheck
 
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
+
 moduleName :: String
 moduleName = "Data.Edison.Coll.LazyPairingHeap"
 
@@ -57,6 +77,12 @@ moduleName = "Data.Edison.Coll.LazyPairingHeap"
 data Heap a = E
             | H1 a (Heap a)
             | H2 a !(Heap a) (Heap a)
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
 
 
 -- Invariants:

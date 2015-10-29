@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Coll.SkewHeap
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -48,10 +56,29 @@ import Data.Monoid
 import Control.Monad
 import Test.QuickCheck
 
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
+
 moduleName :: String
 moduleName = "Data.Edison.Coll.SkewHeap"
 
 data Heap a = E | T a (Heap a) (Heap a)
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 -- invariants:
 --  * Heap order

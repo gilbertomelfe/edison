@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Coll.SplayHeap
 --   Copyright   :  Copyright (c) 1999, 2008 Chris Okasaki
@@ -51,10 +59,29 @@ import Data.Monoid
 import Control.Monad
 import Test.QuickCheck
 
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
+
 moduleName :: String
 moduleName = "Data.Edison.Coll.SplayHeap"
 
 data Heap a = E | T (Heap a) a (Heap a)
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 -- invariants:
 --    * Binary Search Tree order (allowing duplicates)
