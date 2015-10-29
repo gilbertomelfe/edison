@@ -1,3 +1,11 @@
+{-# LANGUAGE DeriveGeneric #-}
+
+{-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Coll.UnbalancedSet
 --   Copyright   :  Copyright (c) 1998-1999, 2008 Chris Okasaki
@@ -48,6 +56,18 @@ import qualified Data.Edison.Seq as S
 import Data.Edison.Coll.Defaults
 import Data.Monoid
 import Test.QuickCheck
+
+-- <G>
+
+import Control.DeepSeq
+
+import GHC.Generics (
+    Generic
+    )
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName :: String
@@ -127,6 +147,13 @@ unsafeMapMonotonic :: Ord a => (a -> a) -> Set a -> Set a
 moduleName = "Data.Edison.Coll.UnbalancedSet"
 
 data Set a = E | T (Set a) a (Set a)
+-- <G>
+
+    deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 -- invariants:
 --   * Binary Search Tree order

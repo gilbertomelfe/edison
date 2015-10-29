@@ -1,3 +1,11 @@
+-- {-# LANGUAGE DeriveGeneric #-}
+
+-- {-# LANGUAGE DeriveAnyClass #-}
+
+
+-- </G>
+
+
 -- |
 --   Module      :  Data.Edison.Coll
 --   Copyright   :  Copyright (c) 2006, 2008 Robert Dockins
@@ -52,6 +60,20 @@ import Data.Edison.Coll.Defaults
 import Test.QuickCheck
 
 import qualified Data.Set as DS
+
+-- <G>
+
+--import Control.DeepSeq
+
+{-
+import GHC.Generics (
+    Generic
+    )
+-}
+
+
+-- </G>
+
 
 -- signatures for exported functions
 moduleName :: String
@@ -131,6 +153,13 @@ unsafeMapMonotonic :: Ord a => (a -> a) -> Set a -> Set a
 moduleName = "Data.Edison.Coll.StandardSet"
 
 type Set = DS.Set
+-- <G>
+
+    --deriving ( Generic , NFData )
+
+
+-- </G>
+
 
 structuralInvariant :: Ord a => Set a -> Bool
 structuralInvariant = DS.valid
